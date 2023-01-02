@@ -620,6 +620,7 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
+  - component: {fileID: 963194229}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -693,6 +694,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &963194229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af4c53e0e8311ff4587e99e7754f45bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1117067105
 GameObject:
   m_ObjectHideFlags: 0
@@ -821,14 +834,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   comida: {fileID: 6486273124946054283, guid: 67c3375064a1f6247916820df94a96b8, type: 3}
-  cantidadComida: 400
+  cantidadComida: 500
   agente: {fileID: 5918482025144026581, guid: bc0b68fe283a9254daf7f0c86c76ddda, type: 3}
   cantidadAgente: 100
   depredador: {fileID: 6556515715292574365, guid: 81211a6d620f3d246a9ae97d14cb331b, type: 3}
-  cantidadDepredador: 5
+  cantidadDepredador: 2
+  parasito: {fileID: 444547320879457558, guid: 00d13d364507d69479874a468717a703, type: 3}
   alimentos: []
   agentes: []
   depredadores: []
+  parasitos: []
 --- !u!4 &1559158420
 Transform:
   m_ObjectHideFlags: 0

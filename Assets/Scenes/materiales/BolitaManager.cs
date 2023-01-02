@@ -10,16 +10,19 @@ public class BolitaManager : MonoBehaviour
     public int cantidadAgente = 20;
     public Depredador depredador;
     public int cantidadDepredador = 3;
+    public ParasitoBolita parasito;
 
     public List<GameObject> alimentos = new List<GameObject>();
     public List<AgenteBolita> agentes = new List<AgenteBolita>();
     public List<Depredador> depredadores = new List<Depredador>();
+    public List<ParasitoBolita> parasitos = new List<ParasitoBolita>();
 
     private int conteo = 0;
     private float timer = 0;
 
     void Start()
     {
+        AdicionaParasito(transform.position);
         //creamos la comida
         for (int n = 0; n < cantidadComida; n++)
         {
@@ -90,6 +93,36 @@ public class BolitaManager : MonoBehaviour
             alimentos.Add(temp);
         }
     }
+
+    public void AdicionaParasito(Vector3 pPosicion)
+    {
+        //ParasitoBolita temp = Instantiate(parasito, pPosicion, Quaternion.identity);
+        if (parasitos.Count < 3)
+        {
+
+            for (int n = 0; n < 1; n++)
+            {
+                ParasitoBolita res = Instantiate(parasito,
+                new Vector3(Random.Range(-50, 50), Random.Range(-50, 50),
+                Random.Range(-50, 50)), Quaternion.identity);
+
+                res.PonID(conteo);
+                conteo++;
+
+                //colocamnos los gnes
+                //tamano
+                res.PonGen(0, 4.0f);
+                //velocidad
+                res.PonGen(1, 5);
+                //rango de vision
+                res.PonGen(2, 10);
+
+                parasitos.Add(res);
+            }
+        }
+
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -107,7 +140,8 @@ public class BolitaManager : MonoBehaviour
         if (agentes.Count > 100) return;
 
         int propRecombinacion = 70;
-        int propMutacion = 10;
+        //int propMutacion = 10;
+        int propMutacion = Random.Range(1, 20);//rango
 
         if (Random.Range(1, 100) < propRecombinacion)
         {
@@ -115,7 +149,7 @@ public class BolitaManager : MonoBehaviour
             int c = Random.Range(0, 7);
             int n = 0;
             AgenteBolita temp = Instantiate(agente, Vector3.zero, Quaternion.identity);
-
+            AgenteBolita temp2 = Instantiate(agente, new Vector3(10, 10, 10), Quaternion.identity);
             temp.PonID(conteo);
             conteo++;
 
@@ -123,37 +157,80 @@ public class BolitaManager : MonoBehaviour
             for (n = 0; n < c; n++)
             {
                 temp.PonGen(n, p1.ObtenGen(n));
+                temp2.PonGen(n, p1.ObtenGen(n));
             }
             //copiamos de padre2 a hijo
             for (n = c; n < 7; n++)
             {
                 temp.PonGen(n, p2.ObtenGen(n));
+                temp2.PonGen(n, p1.ObtenGen(n));
             }
             //vemos si hay mutacion
-            if (Random.Range(0, 100) < propMutacion)
+
+            //Gemelos Mile
+
+            //if (Random.Range(0, 100) < propMutacion)
+            if (Random.Range(0, 30) < 20)
             {
-                //seleccionamos el gen
-                int gen = Random.Range(0, 7);
-                if (gen == 0)
-                    temp.PonGen(0, Random.Range(1.5f, 3.5f));
-                else if (gen == 1)
-                    temp.PonGen(1, Random.Range(0.0f, 1.0f));
-                else if (gen == 2)
-                    temp.PonGen(2, Random.Range(0.0f, 1.0f));
-                else if (gen == 3)
-                    temp.PonGen(3, Random.Range(0.0f, 1.0f));
-                else if (gen == 4)
-                    temp.PonGen(4, Random.Range(5, 15));
-                else if (gen == 5)
-                    temp.PonGen(5, Random.Range(20, 150));
-                else if (gen == 6)
-                    temp.PonGen(6, Random.Range(0.5f, 2.0f));
+                if (propMutacion > 10)
+                {
+                    Debug.Log("entro");
+                    //colocamos los genes
+                    //tamano 
+                    temp.PonGen(0, 3.0f);
+                    //color
+                    temp.PonGen(1, 1.0f);
+                    temp.PonGen(2, 1.0f);
+                    temp.PonGen(3, 1.0f);
+                    //velocidad
+                    temp.PonGen(4, 10);
+                    //rango de vision
+                    temp.PonGen(5, 100);
+                    //costo
+                    temp.PonGen(6, 1.0f);
+
+                    //tamano 
+                    temp2.PonGen(0, 3.0f);
+                    //color
+                    temp2.PonGen(1, 1.0f);
+                    temp2.PonGen(2, 1.0f);
+                    temp2.PonGen(3, 1.0f);
+                    //velocidad
+                    temp2.PonGen(4, 10);
+                    //rango de vision
+                    temp2.PonGen(5, 100);
+                    //costo
+                    temp2.PonGen(6, 1.0f);
+                }
+                else
+                {
+                    //seleccionamos el gen
+                    int gen = Random.Range(0, 7);
+                    if (gen == 0)
+                        temp.PonGen(0, Random.Range(1.5f, 3.5f));
+                    else if (gen == 1)
+                        temp.PonGen(1, Random.Range(0.0f, 1.0f));
+                    else if (gen == 2)
+                        temp.PonGen(2, Random.Range(0.0f, 1.0f));
+                    else if (gen == 3)
+                        temp.PonGen(3, Random.Range(0.0f, 1.0f));
+                    else if (gen == 4)
+                        temp.PonGen(4, Random.Range(5, 15));
+                    else if (gen == 5)
+                        temp.PonGen(5, Random.Range(20, 150));
+                    else if (gen == 6)
+                        temp.PonGen(6, Random.Range(0.5f, 2.0f));
+                }
+
             }
-            temp.energia = 500;
+            //temp.energia = 500;
+            temp.energia = 1000;
+            temp2.energia = 1000;
             p1.energia = 500;
             p2.energia = 500;
 
             agentes.Add(temp);
+            agentes.Add(temp2);
         }
         else
         {
@@ -185,6 +262,7 @@ public class BolitaManager : MonoBehaviour
         }
     }
 
+    //Depredador Leo
     public void CruceDepred(Depredador p1, Depredador p2)
     {
         if (depredadores.Count > 100) return;
@@ -197,7 +275,7 @@ public class BolitaManager : MonoBehaviour
             //seleccionamos el punto de corte
             int c = Random.Range(0, 7);
             int n = 0;
-            Depredador temp = Instantiate(depredador, new Vector3(40,40,0), Quaternion.identity);
+            Depredador temp = Instantiate(depredador, new Vector3(40, 40, 0), Quaternion.identity);
 
             temp.PonID(conteo);
             conteo++;
@@ -218,7 +296,7 @@ public class BolitaManager : MonoBehaviour
                 //seleccionamos el gen
                 int gen = Random.Range(0, 7);
                 if (gen == 0)
-                    temp.PonGen(0, Random.Range(1.5f, 3.5f));
+                    temp.PonGen(0, 2.0f);
                 else if (gen == 1)
                     temp.PonGen(1, Random.Range(0.0f, 1.0f));
                 else if (gen == 2)
@@ -226,7 +304,7 @@ public class BolitaManager : MonoBehaviour
                 else if (gen == 3)
                     temp.PonGen(3, Random.Range(0.0f, 1.0f));
                 else if (gen == 4)
-                    temp.PonGen(4, Random.Range(5, 15));
+                    temp.PonGen(4, 6);
                 else if (gen == 5)
                     temp.PonGen(5, Random.Range(20, 150));
                 else if (gen == 6)

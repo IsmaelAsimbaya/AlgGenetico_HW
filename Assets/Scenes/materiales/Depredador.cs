@@ -5,7 +5,7 @@ using UnityEngine;
 public class Depredador : MonoBehaviour
 {
     public Vector3 posicion;
-    public float energiaPareja = 1200;
+    public float energiaPareja = 6000;
     private float[] cromosoma = new float[7];
     //identificacion de los agentes
     private int id = 0;
