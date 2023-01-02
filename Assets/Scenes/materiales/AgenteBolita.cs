@@ -5,6 +5,7 @@ using UnityEngine;
 public class AgenteBolita : MonoBehaviour
 {
     public Vector3 posicion;
+    public Vector3 scale;
     public float energiaPareja = 1200;
     private float[] cromosoma = new float[7];
     //identificacion de los agentes
@@ -184,6 +185,44 @@ public class AgenteBolita : MonoBehaviour
             Color temp = new Color(255, 0, 0);
             material.color = temp;
             //manager.aumentoVelocidad();
+        }
+        //estado Roberth
+        if (energia > 1500 && energia < 2000)
+        {
+            if (transform.localScale.x > 15 && transform.localScale.y > 15 && transform.localScale.z > 15)
+            {
+                velocidad = cromosoma[4] / 1.5f;
+
+            }
+            else
+            {
+                float var = 0.01f;
+                scale = new Vector3(var, var, var);
+                transform.localScale += scale;
+                velocidad = cromosoma[4] / 1.5f;
+            }
+        }
+        if (energia > 2000)
+        {
+            velocidad = cromosoma[4] / 2;
+        }
+        if (energia > 0 && energia < 1500)
+        {
+            if (transform.localScale.x < 0.5 && transform.localScale.y < 0.5 && transform.localScale.z < 0.5)
+            {
+                float var = 0.01f;
+                velocidad = cromosoma[4] * 3;
+                energia = energia - (var * 3);
+            }
+            else
+            {
+                float var = 0.01f;
+                scale = new Vector3(var, var, var);
+                transform.localScale -= scale;
+                velocidad = cromosoma[4] * 2;
+                energia = energia - (var * 3);
+            }
+
         }
     }
     //coloca valor dentro del cromosoma.
