@@ -16,9 +16,14 @@ public class BolitaManager : MonoBehaviour
     public List<AgenteBolita> agentes = new List<AgenteBolita>();
     public List<Depredador> depredadores = new List<Depredador>();
     public List<ParasitoBolita> parasitos = new List<ParasitoBolita>();
+    
 
     private int conteo = 0;
     private float timer = 0;
+
+    public StatsScript stats;
+    public int gemelosCount = 0;
+    
 
     void Start()
     {
@@ -57,6 +62,8 @@ public class BolitaManager : MonoBehaviour
             tempAgentes.PonGen(6, Random.Range(0.5f, 2.0f));
             agentes.Add(tempAgentes);
         }
+        
+       
 
         //creamos los depredadores
         for (int n = 0; n < cantidadDepredador; n++)
@@ -127,6 +134,14 @@ public class BolitaManager : MonoBehaviour
     void Update()
     {
         Debug.Log(alimentos.Count + ", " + agentes.Count);
+
+        stats.setupAgente(agentes.Count);
+        stats.setupComida(alimentos.Count);
+        stats.setupDepredador(depredadores.Count);
+        stats.setupParasito(parasitos.Count);
+        stats.setupGemelos(gemelosCount);
+        
+        
         timer += Time.deltaTime;
 
         if (timer >= 0.5)
@@ -135,9 +150,13 @@ public class BolitaManager : MonoBehaviour
             AdicionaAlimento(new Vector3(Random.Range(-50, 50), Random.Range(-50, 50), Random.Range(-50, 50)));
         }
     }
+
+    
     public void Cruce(AgenteBolita p1, AgenteBolita p2)
     {
         if (agentes.Count > 100) return;
+
+        
 
         int propRecombinacion = 70;
         //int propMutacion = 10;
@@ -231,6 +250,7 @@ public class BolitaManager : MonoBehaviour
 
             agentes.Add(temp);
             agentes.Add(temp2);
+            gemelosCount += 1;
         }
         else
         {

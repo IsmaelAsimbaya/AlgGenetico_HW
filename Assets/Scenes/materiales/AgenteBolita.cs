@@ -31,24 +31,35 @@ public class AgenteBolita : MonoBehaviour
     private AgenteBolita parejaSeleccionada;
     private Vector3 posPareja = new Vector3();
 
+    public int viajeroCount = 0;
+
     void Awake()
     {
         mr = GetComponent<MeshRenderer>();
         material = mr.material;
         manager = FindObjectOfType<BolitaManager>();
+        
     }
 
     // serie de estados
     void Update()
     {
+        
         posicion = transform.position;
         transform.Translate(Vector3.forward * velocidad * Time.deltaTime);
         //actualizamos la energia
         energia -= costo;
+        /*if(energia > 9000)
+        {
+            Debug.Log("TESTTTTTTTTTT");
+            viajeroCount += 1;
+            estado = 7;
+        }*/
         if (energia <= 0) //verificamos si muere
         {
             estado = 2;
         }
+        
         if (estado == 0) //buscar alimento selecciona el alimento mas cercano para acercarse a el.
         {
             float distancia = float.MaxValue;
@@ -91,11 +102,9 @@ public class AgenteBolita : MonoBehaviour
                 {
                     estado = 3;
                 }
-                if (energia > 9000)
-                {
-                    Debug.Log("Energia > 8000");
-                    estado = 7;
-                }
+
+                
+                
             }
         }
         if (estado == 2) //muerto
@@ -114,6 +123,7 @@ public class AgenteBolita : MonoBehaviour
             {
                 if (a.energia >= energiaPareja && a.id != id)
                 {
+                    
                     d = Vector3.Magnitude(a.transform.position - transform.position);
                     if (d < distancia && d < cromosoma[5])
                     {
@@ -178,14 +188,13 @@ public class AgenteBolita : MonoBehaviour
             parejaSeleccionada.energia = 0;
             Debug.Log("Entra al estado 6");
         }
-        if (estado == 7)
-        {
-            Debug.Log("Entro estado 7");
-            //estado leo
-            Color temp = new Color(255, 0, 0);
+        //estado Leo
+        if (estado == 7){
+            Color temp = new Color(255,0,0);
             material.color = temp;
-            //manager.aumentoVelocidad();
+            manager.stats.setupViajero(viajeroCount);
         }
+        
         //estado Roberth
         if (energia > 1500 && energia < 2000)
         {
@@ -224,6 +233,7 @@ public class AgenteBolita : MonoBehaviour
             }
 
         }
+        
     }
     //coloca valor dentro del cromosoma.
     public void PonGen(int pIndice, float pValor)
@@ -262,6 +272,8 @@ public class AgenteBolita : MonoBehaviour
         costo = cromosoma[6];
 
     }
+
+
 
 }
 
