@@ -715,3 +715,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfe7b6fef4338324eb7342d77aa71a60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  posicion: {x: 0, y: 0, z: 0}
+  agents_eat: 0
+  timer: 0

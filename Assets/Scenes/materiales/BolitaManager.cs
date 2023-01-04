@@ -352,6 +352,7 @@ public class BolitaManager : MonoBehaviour
             temp.PonGen(1, p1.ObtenGen(1));
             temp.PonGen(2, p1.ObtenGen(2));
             temp.PonGen(3, p1.ObtenGen(3));
+
             //velocidad
             temp.PonGen(4, p1.ObtenGen(4));
             //rango de vision
